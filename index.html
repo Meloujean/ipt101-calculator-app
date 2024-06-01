@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(to right, #ae4bb92f, #8a3c59);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: right;
+            box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.5);
+            background-color: rgb(255, 255, 255);
+            padding: 20px;
+        }
+
+        .display {
+            width: 100%;
+            background: rgb(231, 198, 208);
+            color: rgb(0, 0, 0);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 20px;
+            font-size: 1.5rem;
+        }
+
+        .input {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            padding: 1.6rem;
+            background-color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 3px 3px 5px rgba(218, 35, 90, 0.2);
+        }
+
+        button:hover {
+            font-weight: bold;
+            background-color: hsl(194, 25%, 90%);
+        }
+
+        .output,
+        .result {
+            padding: 10px;
+            overflow: hidden;
+            word-break: break-all;
+        }
+
+        .output {
+            font-size: 1rem;
+        }
+
+        .result {
+            font-size: 2rem;
+        }
+
+        @keyframes big {
+            0% {
+                font-size: 18px;
+            }
+
+            100% {
+                font-size: 30px;
+            }
+        }
+
+        @keyframes small {
+            0% {
+                font-size: 28px;
+            }
+
+            100% {
+                font-size: 18px;
+            }
+        }
+
+        /* Mobile view */
+        @media (max-width: 600px) {
+            .calculator {
+                width: 90%;
+            }
+
+            .display {
+                font-size: 1.2rem;
+            }
+
+            button {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Tablet view */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .calculator {
+                width: 80%;
+            }
+
+            .display {
+                font-size: 1.5rem;
+            }
+
+            button {
+                padding: 1.2rem;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="display">
+            <div class="output"></div>
+            <div class="result">0</div>
+        </div>
+        <div class="input">
+            <button>C</button>
+            <button>%</button>
+            <button>DEL</button>
+            <button>/</button>
+
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>*</button>
+
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>-</button>
+
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>+</button>
+
+            <button>00</button>
+            <button>0</button>
+            <button>.</button>
+            <button>=</button>
+        </div>
+    </div>
+    <script>
+        const output = document.querySelector(".output");
+        const result = document.querySelector(".result");
+        const keys = document.querySelectorAll("button");
+
+        keys.forEach(key => {
+            key.addEventListener("click", calculate);
+        })
+
+        function calculate() {
+            let buttonText = this.innerText;
+            if (buttonText === "C") {
+                output.innerText = "";
+                result.innerText = "0";
+                return;
+            }
+
+            if (buttonText === "DEL") {
+                output.textContent = output.textContent.substring(0, output.textContent.length - 1);
+                result.innerText = "0";
+                return;
+            }
+
+            if (buttonText === "=") {
+                result.innerText = eval(output.innerText);
+                result.style.animationFillMode = "forwords";
+                output.style.animationFillMode = "forwords";
+                result.style.animation = "big 0.5s ease-in-out";
+                output.style.animation = "small 0.5s ease-in-out";
+            } else {
+                output.textContent += buttonText;
+                return;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
